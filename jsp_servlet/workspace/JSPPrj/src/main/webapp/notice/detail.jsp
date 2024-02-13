@@ -1,18 +1,20 @@
-
+<%@page import="java.sql.PreparedStatement"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ 
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.sql.DriverManager" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.Statement" %>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<% 
+ <% 
+ int id = Integer.parseInt(request.getParameter("id"));
 
 
 // MySQL 서버 정보
 String url = "jdbc:mysql://192.168.249.129:3306/expdb1"; // 데이터베이스 URL
-String sql = "SELECT * FROM NOTICE";
+String sql = "SELECT * FROM NOTICE WHERE ID=?";
 //MySQL 드라이버 로드
 Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -24,12 +26,24 @@ Connection con = null;
 //데이터베이스에 연결
 con = DriverManager.getConnection(url, username, password);
 
-Statement st = con.createStatement();
-ResultSet rs = st.executeQuery(sql);
+PreparedStatement st = con.prepareStatement(sql);
+st.setInt(1, id);
+ResultSet rs = st.executeQuery();
 
 
+rs.next(); 
 
 %>
+	<%
+    rs.close();
+    st.close();
+    con.close();
+     %>
+     
+     <%=rs.getString("CONTENT") %><%=rs.getString("TITLE") %>
+     <%=rs.getDate("REGDATE") %><%=rs.getString("WRITER_ID") %>
+     <%=rs.getInt("HIT") %>
+     <%=rs.getString("FILES") %>
 <!DOCTYPE html>
 <html>
 
@@ -54,7 +68,7 @@ ResultSet rs = st.executeQuery(sql);
 <body>
     <!-- header 부분 -->
 
-    <header id="header">
+	<header id="header">
         
         <div class="content-container">
             <!-- ---------------------------<header>--------------------------------------- -->
@@ -158,95 +172,77 @@ ResultSet rs = st.executeQuery(sql);
 			</aside>
 			<!-- --------------------------- main --------------------------------------- -->
 
+			
 
 
-		<main class="main">
-			<h2 class="main title">공지사항</h2>
-			
-			<div class="breadcrumb">
-				<h3 class="hidden">경로</h3>
-				<ul>
-					<li>home</li>
-					<li>고객센터</li>
-					<li>공지사항</li>
-				</ul>
-			</div>
-			
-			<div class="search-form margin-top first align-right">
-				<h3 class="hidden">공지사항 검색폼</h3>
-				<form class="table-form">
-					<fieldset>
-						<legend class="hidden">공지사항 검색 필드</legend>
-						<label class="hidden">검색분류</label>
-						<select name="f">
-							<option  value="title">제목</option>
-							<option  value="writerId">작성자</option>
-						</select> 
-						<label class="hidden">검색어</label>
-						<input type="text" name="q" value=""/>
-						<input class="btn btn-search" type="submit" value="검색" />
-					</fieldset>
-				</form>
-			</div>
-			
-			<div class="notice margin-top">
-				<h3 class="hidden">공지사항 목록</h3>
-				<table class="table">
-					<thead>
-						<tr>
-							<th class="w60">번호</th>
-							<th class="expand">제목</th>
-							<th class="w100">작성자</th>
-							<th class="w100">작성일</th>
-							<th class="w60">조회수</th>
-						</tr>
-					</thead>
-					<tbody>
-					<% while(rs.next()){ %>
-					<tr>
-						<td><%=rs.getInt("id")%></td>
-						<td class="title indent text-align-left"><a href="detail.jsp?id=<%=rs.getInt("id")%>"><%=rs.getString("TITLE")%></a></td>
-						<td><%=rs.getString("WRITER_ID")%></td>
-						<td>
-							<%=rs.getDate("REGDATE")%>	
-						</td>
-						<td><%=rs.getInt("HIT")%></td>
-					</tr>
-					<%} %>		
-					
-					
-					
-					</tbody>
-				</table>
-			</div>
-			
-			<div class="indexer margin-top align-right">
-				<h3 class="hidden">현재 페이지</h3>
-				<div><span class="text-orange text-strong">1</span> / 1 pages</div>
-			</div>
-
-			<div class="margin-top align-center pager">	
-		
-	<div>
-		
-		
-		<span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
-		
-	</div>
-	<ul class="-list- center">
-		<li><a class="-text- orange bold" href="?p=1&t=&q=" >1</a></li>
+			<main>
+				<h2 class="main title">공지사항</h2>
 				
-	</ul>
-	<div>
-		
-		
-			<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
-		
-	</div>
-	
-			</div>
-		</main>
-		
+				<div class="breadcrumb">
+					<h3 class="hidden">breadlet</h3>
+					<ul>
+						<li>home</li>
+						<li>고객센터</li>
+						<li>공지사항</li>
+					</ul>
+				</div>
+				
+				<div class="margin-top first">
+						<h3 class="hidden">공지사항 내용</h3>
+						<table class="table">
+							<tbody>
+								<tr>
+									<th>제목</th>
+									<td class="text-align-left text-indent text-strong text-orange" colspan="3"></td>
+								</tr>
+								<tr>
+									<th>작성일</th>
+									<td class="text-align-left text-indent" colspan="3">	</td>
+								</tr>
+								<tr>
+									<th>작성자</th>
+									<td></td>
+									<th>조회수</th>
+									<td></td>
+								</tr>
+								<tr>
+									<th>첨부파일</th>
+									<td colspan="3"></td>
+								</tr>
+								<tr class="content">
+									<td colspan="4"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					<div class="margin-top text-align-center">
+						<a class="btn btn-list" href="list.jsp">목록</a>
+					</div>
+					
+					<div class="margin-top">
+						<table class="table border-top-default">
+							<tbody>
+								
+								<tr>
+									<th>다음글</th>
+									<td colspan="3"  class="text-align-left text-indent">다음글이 없습니다.</td>
+								</tr>
+								
+									
+								
+								
+								<tr>
+									<th>이전글</th>
+									<td colspan="3"  class="text-align-left text-indent"><a class="text-blue text-strong" href="">스프링 DI 예제 코드</a></td>
+								</tr>
+								
+								
+							</tbody>
+						</table>
+					</div>			
+					
+			</main>		
 			
 		</div>
 	</div>
@@ -288,8 +284,3 @@ ResultSet rs = st.executeQuery(sql);
     </body>
     
     </html>
-    <% 
-    rs.close();
-    st.close();
-    con.close();
-     %>

@@ -1,49 +1,9 @@
-<%@page import="java.sql.PreparedStatement"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.SQLException" %>
-<%@ page import="java.sql.DriverManager" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.Statement" %>
-
- <% 
- int id = Integer.parseInt(request.getParameter("id"));
 
 
-// MySQL 서버 정보
-String url = "jdbc:mysql://192.168.249.129:3306/expdb1"; // 데이터베이스 URL
-String sql = "SELECT * FROM NOTICE WHERE ID=?";
-//MySQL 드라이버 로드
-Class.forName("com.mysql.cj.jdbc.Driver");
-
-String username = "root"; // MySQL 사용자 이름
-String password = "112233qqwwee!"; // MySQL 암호
-
-// 연결 객체 초기화
-Connection con = null;
-//데이터베이스에 연결
-con = DriverManager.getConnection(url, username, password);
-
-PreparedStatement st = con.prepareStatement(sql);
-st.setInt(1, id);
-ResultSet rs = st.executeQuery();
-
-
-rs.next(); 
-
-%>
-	<%
-    rs.close();
-    st.close();
-    con.close();
-     %>
-     
-     <%=rs.getString("CONTENT") %><%=rs.getString("TITLE") %>
-     <%=rs.getDate("REGDATE") %><%=rs.getString("WRITER_ID") %>
-     <%=rs.getInt("HIT") %>
-     <%=rs.getString("FILES") %>
 <!DOCTYPE html>
 <html>
 
@@ -193,24 +153,24 @@ rs.next();
 							<tbody>
 								<tr>
 									<th>제목</th>
-									<td class="text-align-left text-indent text-strong text-orange" colspan="3"></td>
+									<td class="text-align-left text-indent text-strong text-orange" colspan="3"><%=request.getAttribute("title") %></td>
 								</tr>
 								<tr>
 									<th>작성일</th>
-									<td class="text-align-left text-indent" colspan="3">	</td>
+									<td class="text-align-left text-indent" colspan="3"><%=request.getAttribute("regdate") %></td>
 								</tr>
 								<tr>
 									<th>작성자</th>
-									<td></td>
+									<td><%=request.getAttribute("writeId")%></td>
 									<th>조회수</th>
-									<td></td>
+									<td><%=request.getAttribute("hit")%></td>
 								</tr>
 								<tr>
 									<th>첨부파일</th>
-									<td colspan="3"></td>
+									<td colspan="3"><%=request.getAttribute("files")%></td>
 								</tr>
 								<tr class="content">
-									<td colspan="4"></td>
+									<td colspan="4"><%=request.getAttribute("content")%></td>
 								</tr>
 							</tbody>
 						</table>

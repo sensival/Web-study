@@ -3,7 +3,18 @@
     <head>
         <title>온라인 프로필</title>
         <meta charset="utf-8">
+        <style>
+            table,th,td {
+                border: 1px solid black; /* 1픽셀짜리 테두리 */
+                border-collapse: collapse; /* 중복되는 테두리를 한 줄로 표시 */
+            }
+            
+            th,td {
+                padding: 15px; /* 셀 테두리와 내용 사이의 여백 */
+            }
+        </style>
     </head>
+
     <body>
         <h1>Lee Min Seon</h1>
         <p>이메일:alstjs883@naver.com</p>
@@ -25,5 +36,31 @@
             <li>infusion pump</li>
             <li><b>20G Angio catheter</b></li>
         </li>
+        <h2>Academic</h2>
+        <table>
+            <caption>학력 사항</caption>
+            <thead>
+                <tr>
+                    <th>출신학교</th>
+                    <th>전공</th>
+                    <th>기간</th>
+                    <th>졸업구분</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>한양대학교</td>
+                    <td>간호학</td>
+                    <td>2014.03~2018.2</td>
+                    <td>졸업</td>
+                </tr>
+                <tr>
+                    <td>한양사이버대학교</td>
+                    <td>응용소프트웨어공학</td>
+                    <td>2023.02~</td>
+                    <td>재학</td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>

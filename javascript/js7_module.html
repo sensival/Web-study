@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- Jquery 모듈 이용-->
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    </head>
+    <body>
+        <ul id="list">
+            <li>empty</li>
+            <li>empty</li>
+            <li>empty</li>
+            <li>empty</li>
+        </ul>
+        <input id="execute_btn" type="button" value="execute" />
+        <script type="text/javascript">
+        $('#execute_btn').click(function(){
+            $('#list li').text('coding everybody');
+        })
+        </script>
+    </body>
+</html>
+
+<!-- 모듈화가 없는 js-->
+<!--
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+       
+        <script>
+            function welcome(){
+                return 'Hello world'
+            }
+            alert(welcome());
+        </script>
+    </body>
+</html>
+-->
+<!-- 모듈화한 js-->
+
+<!-- <html>
+    <head>
+        <meta charset="utf-8"/>
+        <script src="greeting.js"></script>  브라우저가 다운로드
+    </head>
+    <body>
+        <script>
+            alert(welcome());
+        </script>
+    </body>
+</html> -->
+
+

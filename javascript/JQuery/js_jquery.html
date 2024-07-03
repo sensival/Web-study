@@ -1,0 +1,106 @@
+<!--- js only
+<html>
+    <head>
+        <script type="text/javascript">
+            //사용자의 브라우저에 따라 다른 로직 수행
+            function addEvent(target, eventType,eventHandler, useCapture) {
+                //target(window).addEventListener가 존재하느냐? 익스플로러 제외 addEventListener 다 제공
+                if (target.addEventListener) { // W3C DOM
+                    target.addEventListener(eventType,eventHandler,useCapture?useCapture:false);
+                //target(window).addEventListener가 존재하느냐? 
+                } else if (target.attachEvent) {  // IE DOM
+                    var r = target.attachEvent("on"+eventType, eventHandler);
+                }
+            }// jquery를 쓰면 이런 cross browser 로 인한 분기문 필요없음
+ 
+     
+            function clickHandler(event) {//이벤트는 시스템에서 인자로
+                //id가 navigation인 element가 담겨짐
+                var nav = document.getElementById('navigation');
+                for(var i = 0; i < nav.childNodes.length; i++) { //배열에 childnode 담아
+                    var child = nav.childNodes[i];
+                    if(child.nodeType==3) //공백이면
+                        continue;
+                    child.className = '';//일단 모든 클래스네임 지우고
+                }
+                event.target.className = 'selected'; //현재 선택한 것의 class네임 변경
+            }
+            // 여기부터 함수의 시작
+            //window가 load 되었을 때 fuction 호출
+            addEvent(window, 'load', function(eventObj) {
+                var nav = document.getElementById('navigation');
+                for(var i = 0; i < nav.childNodes.length; i++) {
+                    var child = nav.childNodes[i];
+                    if(child.nodeType==3)
+                        continue;
+                    addEvent(child, 'click', clickHandler);
+                }
+            })
+        </script>
+       
+        <style type="text/css">
+            /*navigation 중 li tag*/
+            #navigation li {
+                list-style:none;
+                float:left;
+                padding:5px;
+            }
+            #navigation {
+                cursor:pointer;
+            }
+            /*navigation 중 class가 selected인 tag*/
+            #navigation .selected { 
+                background-color:red;
+                color:white;
+            }
+        </style>
+    </head>
+    <body>
+        <ul id="navigation">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>javascript</li>
+            <li class="selected">jQuery</li>
+            <li>PHP</li>
+            <li>mysql</li>
+        </ul>
+    </body>
+</html>
+--->
+<!--jQuery이용-->
+<html>
+    <head>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script type="text/javascript">
+            //여기부터 jQuery
+            $('#navigation li').live('click', function() { //click이 일어날 때마다 아레 이벤트 발생
+                $('#navigation li').removeClass('selected'); //암시적으로 순회
+                $(this).addClass('selected');
+            })// click한 element가 this 
+        </script>
+        <style type="text/css">
+            #navigation li {
+                list-style:none;
+                float:left;
+                padding:5px;
+            }
+            #navigation {
+                cursor:pointer;
+            }
+            #navigation .selected {
+                background-color:red;
+                color:white;
+            }
+        </style>
+    </head>
+    <body>
+        <ul id="navigation">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>javascript</li>
+            <li class="selected">jQuery</li>
+            <li>PHP</li>
+            <li>mysql</li>
+        </ul>
+    </body>
+</html>

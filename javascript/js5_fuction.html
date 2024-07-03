@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <script>
+            function numbering(){
+                var i = 0;
+                while(i < 10){
+                    document.write(i);
+                    i += 1;
+                }   
+            }
+            
+            numbering();
+            numbering();
+            numbering();
+            numbering();
+            numbering();
+
+            //return 값이 있는 함수
+            function get_member1(){
+                return 'egoing';
+            }
+            
+            function get_member2(){
+                return 'k8805';
+            }
+            
+            alert(get_member1());
+            alert(get_member2());
+
+
+            // return은 함수 중지. return 'k8805' 이하는 어떠한 경우도 실행되지 않는다.
+            function get_member(){
+                return 'egoing';
+                return 'k8805';
+                return 'sorialgi';
+            }
+            alert(get_member());
+            
+            //인자를 전달
+            function get_arguments(arg1, arg2){
+                return arg1 + arg2
+            }
+            
+            alert(get_arguments(10, 20));
+            alert(get_arguments(20, 30));
+
+            // 함수를 정의 하는 방법
+            var numbering = function (){
+                i = 0;
+                while(i < 10){
+                    document.write(i);
+                    i += 1;
+                }   
+            }
+            numbering();
+        </script>
+    </body>
+</html>
+
+

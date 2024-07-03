@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <script>
+            // 배열 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+            function get_members(){
+                return ['egoing', 'k8805', 'sorialgi'];
+            }
+            members = get_members();
+            // members.length는 배열에 담긴 값의 숫자를 알려준다. 
+            for(i = 0; i < members.length; i++){
+                // members[i].toUpperCase()는 members[i]에 담긴 문자를 대문자로 변환해준다.
+                document.write(members[i].toUpperCase());   
+                document.write('<br />');
+            }
+
+            // 원소하나 추가
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li.push('f');
+            alert(li);
+
+            // 원소 여러개 추가
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li = li.concat(['f', 'g']);
+            alert(li);
+
+            // 시작점에 원소 추가
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li.unshift('z');
+            alert(li);
+
+            // . splice는 첫번째 인자에 해당하는 원소부터 두번째 인자에 해당하는 원소의 숫자만큼의 값을 배열로부터 제거한 후에 리턴한다. 그리고 세번째 인자부터 전달된 인자들을 첫번째 인자의 원소 뒤에 추가한다.
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li.splice(2, 0, 'B');
+            alert(li);
+
+            // 첫번째 원소 제거
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li.shift();
+            alert(li);
+
+            // 마지막 원소 제거
+            var li = ['a', 'b', 'c', 'd', 'e'];
+            li.pop();
+            alert(li);
+
+            // 정렬
+            var li = ['c', 'e', 'a', 'b', 'd'];
+            li.sort();
+            alert(li);
+
+            // 역순 정렬
+            var li = ['c', 'e', 'a', 'b', 'd'];
+            li.reverse();
+            alert(li);
+
+
+            // 딕셔너리 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            var grades = {'egoing': 10, 'k8805': 6, 'sorialgi': 80};
+            alert(grades['sorialgi']);
+            alert(grades.sorialgi);
+
+
+            var grades = {'egoing': 10, 'k8805': 6, 'sorialgi': 80};
+            for(key in grades) {
+                document.write("key : "+key+" value : "+grades[key]+"<br />");
+            }
+
+            // 객체 지향
+            var grades = {
+                'list': {'egoing': 10, 'k8805': 6, 'sorialgi': 80},
+                'show' : function(){
+                    for(var name in this.list){
+                        document.write(name+':'+this.list[name]+"<br />");
+                    }
+                }
+            };
+            grades.show();
+        </script>
+    </body>
+</html>

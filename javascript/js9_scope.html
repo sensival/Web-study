@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <script>
+        var vscope = 'global';
+        function fscope(){
+            var vscope = 'local';
+            alert('함수안 '+vscope);
+        }
+        fscope();
+        alert('함수밖 '+vscope);
+
+        // 
+        var vscope = 'global';
+        function fscope(){
+            vscope = 'local';  // var를 사용하지 않아서 전역변수도 local로 대입됨
+            alert('함수안'+vscope);
+        }
+        fscope();
+        alert('함수밖'+vscope);
+
+        // 전역 i = 0
+        for(var i = 0; i < 5; i++){
+            // 함수 a 호출
+            function a() {
+                var i = 0; // 지역 변수 i
+            }
+            // document.write(i); 전역 변수 i의 값 출력
+            // 출력: 0, 1, 2, 3, 4
+        }
+
+        // 무한반복
+        // function a (){
+        //     i = 0;
+        // }
+        // for(i = 0; i < 5; i++){
+        //     a();
+        //     document.write(i);
+        // }
+
+        MYAPP = {}
+        MYAPP.calculator = {
+            'left' : null,
+            'right' : null
+        }
+        MYAPP.coordinate = {
+            'left' : null,
+            'right' : null
+        }
+        
+        MYAPP.calculator.left = 10;
+        MYAPP.calculator.right = 20;
+        function sum(){
+            return MYAPP.calculator.left + MYAPP.calculator.right;
+        }
+        document.write(sum());
+
+        // 전역스코프를 오염시키지 않고 함수 즉시실행 (function(){}()) 구문
+        (function(){
+        var MYAPP = {}
+        MYAPP.calculator = {
+            'left' : null,
+            'right' : null
+        }
+        MYAPP.coordinate = {
+            'left' : null,
+            'right' : null
+        }
+        MYAPP.calculator.left = 10;
+        MYAPP.calculator.right = 20;
+        function sum(){
+            return MYAPP.calculator.left + MYAPP.calculator.right;
+        }
+        document.write(sum());
+        }())
+
+
+        // 자바에선 호출 안되지만 여기선 가능
+        for(var i = 0; i < 1; i++){
+            var name = 'coding everybody';
+        }
+        alert(name);
+
+        // 실행 결과 5
+        var i = 5; // 전역 스코프
+
+        function a() {
+            var i = 10; // 함수 a의 지역 스코프
+            b(); // 함수 b 호출
+        }
+
+        function b() {
+            document.write(i); // 전역 변수 i 참조
+        }
+
+        a(); // 5 출력
+        </script>
+    </body>
+</html>

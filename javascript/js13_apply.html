@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <script>
+            o1 = {val1:1, val2:2, val3:3}
+            o2 = {v1:10, v2:50, v3:100, v4:25}
+            function sum(){
+                var _sum = 0;
+                for(name in this){
+                    _sum += this[name];
+                }
+                return _sum;
+            }
+            alert(sum.apply(o1)) // 6
+            alert(sum.apply(o2)) // 185
+            //sum.apply(o1)은 함수 sum을 객체 o1의 메소드로 만들고 sum을 호출한 후에 sum을 삭제한다. 아래와 비슷하다.
+            o1.sum = sum;
+            alert(o1.sum());
+            delete o1.sum();
+        </script>
+    </body>
+</html>

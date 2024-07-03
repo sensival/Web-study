@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <script>
+            //내부함수는 외부함수의 지역변수에 접근
+            function outter(){
+            var title = 'coding everybody';  
+            function inner(){        
+                    alert(title);
+                }
+                inner();
+            }
+            outter();
+
+            // 
+            function outter(){
+                var title = 'coding everybody';  
+                return function(){        
+                    alert(title);
+                }
+            }
+            inner = outter(); // 외부함수가 종료되었지만 return으로 내부함수를 받아서
+            inner();// 외부함수의 변수를 계속 호출가능
+
+            function factory_movie(title){
+                return {
+                    get_title : function (){
+                        return title;
+                    },
+                    set_title : function(_title){
+                        title = _title
+                    }
+                }   
+            }
+            ghost = factory_movie('Ghost in the shell');
+            matrix = factory_movie('Matrix');
+            
+            alert(ghost.get_title());
+            alert(matrix.get_title());
+            
+            ghost.set_title('공각기동대');
+            
+            alert(ghost.get_title());
+            alert(matrix.get_title());
+
+            // 외부 함수가 아닌 형태로 선언
+            var arr = []
+            for(var i = 0; i < 5; i++){
+                arr[i] = function(){
+                    return i;
+                }
+            }
+            // return i는 전역변수인 i(마지막 i++까지해서 5로끝난) 만 참조함
+            for(var index in arr) {
+                console.log(arr[index]());
+            } // 출력  5 5 5 5 5
+
+            // 
+            var arr = []
+            for(var i = 0; i < 5; i++){
+                arr[i] = function(id) {
+                    return function(){
+                        return id;
+                    }
+                }(i);// 함수 선언과 동시에 실행해서 내부함수에 함수가 실행될때의 외부함수 지역변수 전달
+            }
+            for(var index in arr) {
+                console.log(arr[index]());
+            }
+            </script>
+    </body>
+</html>

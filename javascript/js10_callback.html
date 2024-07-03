@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    </head>
+    <body>
+        <script>
+            // 함수 자체를 인자로
+            // 주의 같은 이름의 함수가 여러 번 정의되면, 나중에 정의된 함수가 이전 정의를 덮어씁니다.
+            function cal0(func, num){
+                return func(num)
+            }
+            function increase(num){
+                return num+1
+            }
+            function decrease(num){
+                return num-1
+            }
+            alert(cal0(increase, 1));
+            alert(cal0(decrease, 1));
+            
+            // 리턴값으로 함수의 사용
+            function cal(mode){
+                var funcs = {
+                    'plus' : function(left, right){return left + right},
+                    'minus' : function(left, right){return left - right}
+                }
+                return funcs[mode];
+            }
+            alert(cal('plus')(2,1));
+            alert(cal('minus')(2,1)); 
+
+            // 배열의 값으로
+            var process = [
+                function(input){ return input + 10;},
+                function(input){ return input * input;},
+                function(input){ return input / 2;}
+            ];
+
+            var input = 1;
+            for(var i = 0; i < process.length; i++){
+                input = process[i](input);
+            }
+            alert(input);
+
+            // 콜백: 값으로서의 함수
+            // 배열에 내장된 sort메소드는 원래 사전순 정렬 1,10,2 -> 1,10,2, sort는 함수를 인자로 받음
+            function sortNumber(a,b){
+             // 위의 예제와 비교해서 a와 b의 순서를 바꾸면 정렬순서가 반대가 된다.
+                console.log(a, b)
+                return b-a;
+            }
+
+            var numbers = [20, 10,8,5,6,9,25,1,0,5,4];
+            alert(numbers.sort(sortNumber)); // array, [20,10,9,8,7,6,5,4,3,2,1]
+            
+
+            // 비동기 처리 ajax
+            // $.get ajax를 가능하게 하는 특별한 Mx, 
+            $.get('./datasource.json.js', function(result){ //data를 읽을 url, 호출할 함수(받아온 값이 인자가 됨),
+                console.log(result);
+            }, 'json'); // 'json': 서버에서 반환된 데이터를 JSON 형식으로 간주하고, JavaScript 객체로 파싱하여 콜백 함수에 전달합니다.
+        </script>
+    </body>
+</html>

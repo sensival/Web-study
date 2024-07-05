@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <script>
+            // 생성자
+            function Person(name){
+                this.name = name;
+                this.introduce = function(){
+                    return 'My name is '+this.name; 
+                }   
+            }
+            var p1 = new Person('egoing');
+            document.write(p1.introduce()+"<br />");
+            
+            var p2 = new Person('leezche');
+            document.write(p2.introduce()+"<br />");
+
+            // 전역 객체 모든 객체는 window객체의 프로퍼티(key:value)
+            var o = {'func':function(){
+                alert('Hello?');
+            }}
+            o.func();
+            window.o.func();
+
+            // 웹브라우저 자바스크립트에서는 alert()이라는 전역객체의 메소드가 존재하지만 node.js에는 존재하지 않는다. 
+            // 웹브라우저에서 전역객체는 window이지만 node.js에서는 global이다. 
+            
+            // this
+            var o = {
+                func : function(){
+                    if(o === this){
+                        document.write("o === this <br>");
+                    }
+                }
+            }
+            o.func();   
+
+            function func1(){
+                if(window === this){
+                    document.write("window === this <br>");
+                }
+            }
+            func1();
+
+            // 
+            var o = {}
+            var p = {}
+            function func(){
+                switch(this){
+                    case o:
+                        document.write('o<br />');
+                        break;
+                    case p:
+                        document.write('p<br />');
+                        break;
+                    case window:
+                        document.write('window<br />');
+                        break;          
+                }
+            }
+            func();
+            func.apply(o);
+            func.apply(p);
+
+            // prototype: prototype에 저장된 속성들은 생성자를 통해서 객체가 만들어질 때 그 객체에 연결된다. 
+            function Ultra(){}
+            Ultra.prototype.ultraProp = true;
+            
+            function Super(){}
+            Super.prototype = new Ultra();
+            
+            function Sub(){}
+            Sub.prototype = new Super();
+            
+            var o = new Sub();
+            console.log(o.ultraProp);
+            // 객체 o에서 ultraProp를 찾는다.
+            // 없다면 Sub.prototype.ultraProp를 찾는다.
+            // 없다면 Super.prototype.ultraProp를 찾는다.
+            // 없다면 Ultra.prototype.ultraProp를 찾는다.
+
+
+            // 상속
+            function Person1(name){
+                this.name = name;
+            }
+            Person1.prototype.name=null;
+            Person1.prototype.introduce = function(){
+                return 'My name is '+this.name; 
+            }
+            
+            function Programmer(name){
+                this.name = name;
+            }
+            Programmer.prototype = new Person1();
+            Programmer.prototype.coding = function(){
+                return "hello world";
+            }
+            
+            var p1 = new Programmer('egoing');
+            document.write(p1.introduce()+"<br />");
+            document.write(p1.coding()+"<br />"); // Programmer는 Person의 기능을 가지고 있으면서 Person이 가지고 있지 않은 기능인 메소드 coding을 가지고 있다. 
+
+            // 표준 내장 객체 확장
+            // 자바스크립트는 아래와 같은 내장 객체를 가지고 있다. 
+            // Object
+            // Function
+            // Array
+            // String
+            // Boolean
+            // Number
+            // Math
+            // Date
+            // RegExp
+            //배열에서 특정한 값을 랜덤하게 추출하는 코드다. 
+            Array.prototype.rand = function(){// 프로토타입으로 확장
+                var index = Math.floor(this.length*Math.random());
+                return this[index];
+            }
+            var arr = new Array('seoul','new york','ladarkh','pusan', 'Tsukuba');
+            console.log(arr.rand());
+
+            //Object 객체를 확장하면 모든 객체가 접근할 수 있는 API를 만들 수 있다. 아래는 Object 객체를 확장한 사례다.
+            Object.prototype.contain = function(neddle) {
+                for(var name in this){
+                    if(this[name] === neddle){
+                        return true;
+                    }
+                }
+                return false;
+            }
+            var o = {'name':'egoing', 'city':'seoul'}
+            console.log(o.contain('egoing')); // true
+            var a = ['egoing','leezche','grapittie'];
+            console.log(a.contain('leezche')); // true
+            // 가급적 확장하지 않는다. 모든 객체의 속성이 되므로..
+            for(var name in o){
+                if(o.hasOwnProperty(name))
+                    console.log(name);  
+            } // 굳이 Obejct를 확장했는데, 어떤 객제의 고유 속성일 때만 실행하고 싶다면 (prototype이 아닌) hasOwnProperty
+        
+        
+        </script>
+    </body>
+</html>

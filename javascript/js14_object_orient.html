@@ -142,7 +142,54 @@
                     console.log(name);  
             } // 굳이 Obejct를 확장했는데, 어떤 객제의 고유 속성일 때만 실행하고 싶다면 (prototype이 아닌) hasOwnProperty
         
-        
+            // 래퍼객체
+            // 원시 자료형
+            // 숫자
+            // 문자열 ---> 이 중 문자열은 분명히 프로퍼티와 메소드가 있지만 객체가 아님. 자바스크립트는 임시로 문자열 객체를 만들고 사용이 끝나면 제거하기 때문이다.  
+            // 불리언(true/false)
+            // null
+            // undefined  
+
+            var str = 'coding';
+            console.log(str.length);        // 6
+            console.log(str.charAt(0));     // "C"
+
+            var str = 'coding';
+            str.prop = 'everybody'; // prop 프로퍼티는 이 객체에 저장되고 이 객체는 곧 제거 된다
+            console.log(str.prop);      // undefined
+            // 레퍼객체로는 String, Number, Boolean이 있다. null과 undefined는 레퍼 객체가 존재하지 않는다.
+
+            // 참조 : 참조 데이터 타입은 메모리 주소(참조)를 저장, 원시 데이터 타입은 값 자체를 직접 저장
+            var a = {'id':1}; //객체는 가리키는 것!
+            var b = a; // 같은 객체를 가리키도록
+            b.id = 2; //원본을 복제한 것이 아니라 원본 파일을 참조(reference)
+            console.log(a.id);  // 2
+
+
+            // 참조와 함수는 무슨관계!?
+            // i) 원시 데이터 타입을 인자로 줄 때
+            var a = 1;
+            function func(b){ // b=a이라는 과정이 추가됨
+                b = 2;
+            }
+            func(a);
+            console.log(a); //1 ---> 2로 바꾸고 싶으면 리턴해~~
+            
+            // ii) 참조 데이터 타입을 인자로 넘겼을 때
+            var a = {'id':1};
+            function func(b){ // b=a이라는 과정이 추가됨
+                b = {'id':2}; // b는 그냥 새로운 객체를 바라보게됨
+            }
+            func(a);
+            console.log(a.id);  // 1 함수 func의 파라미터 b로 전달된 값은 객체 a이다. (b = a) b를 새로운 객체로 대체하는 것은 (b = {'id':2}) b가 가르키는 객체를 변경하는 것이기 때문에 객체 a에 영향을 주지 않는다.
+            
+            // iii) 그 속성이 소속된 객체를 대상으로 수정작업을 한 것이 되기 때문에??
+            var a = {'id':1};
+            function func(b){ // b와 a는 일단 같은 객체를 바라봄
+                b.id = 2; // 수정가능
+            }
+            func(a);
+            console.log(a.id);  // 2
         </script>
     </body>
 </html>

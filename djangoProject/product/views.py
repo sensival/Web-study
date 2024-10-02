@@ -4,10 +4,14 @@ from rest_framework.response import Response
 from .models import Product
 from rest_framework.views import APIView
 from .serializers import ProductSerializer
+from rest_framework import generics
 
-class ProductListAPI(APIView):
-    def get(self, request):
-        queryset = Product.objects.all()
-        print(queryset)
-        serializer = ProductSerializer(queryset, many=True)
-        return Response(serializer.data)
+
+
+class ProductList(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
